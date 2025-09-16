@@ -1,0 +1,1 @@
+# app/models/__init__.py - Inicialización del módulo de modelos Pydantic

@@ -1,0 +1,96 @@
+# .gitignore para IRIS Backend
+
+# === ARCHIVOS DE CONFIGURACIÓN SENSIBLES ===
+.env
+.env.local
+.env.production
+*.key
+*.pem
+
+# === PYTHON ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# === ENTORNOS VIRTUALES ===
+iris-env/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# === IDEs Y EDITORES ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# === LOGS ===
+*.log
+logs/
+.log
+
+# === TESTING ===
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+.cache
+nosetests.xml
+coverage/
+
+# === JUPYTER ===
+.ipynb_checkpoints
+
+# === MYPY ===
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# === ARCHIVOS TEMPORALES ===
+.tmp/
+*.tmp
+*.temp
+.temporary/
+
+# === DOCUMENTACIÓN GENERADA ===
+docs/_build/
+site/
+
+# === DATABASE DUMPS ===
+*.sql.backup
+*.dump

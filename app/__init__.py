@@ -1,0 +1,1 @@
+# app/__init__.py - Inicialización del módulo principal de la aplicación
