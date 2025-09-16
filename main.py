@@ -12,8 +12,9 @@ from app.config.logging import logger, log_business_event
 # Importar middleware de logging
 from app.middleware.logging_middleware import LoggingMiddleware, RequestContextMiddleware
 
-# Importar todos los routers (los crearemos a continuación)
-from app.routers import auth, businesses, employees, services, appointments, loyalty, promotions
+# Importar todos los routers (Día 2 - implementados)
+from app.routers import auth, businesses, employees, services
+# TODO Día 3: appointments, loyalty, promotions
 
 # Configuración de la aplicación principal
 app = FastAPI(
@@ -69,26 +70,24 @@ async def global_exception_handler(request: Request, exc: Exception):
 # Incluir todos los routers con sus prefijos correspondientes
 # Cada router maneja una funcionalidad específica del sistema
 
+# ===== ROUTERS IMPLEMENTADOS - DÍA 2 =====
+
 # Router de autenticación (verificación de tokens)
-app.include_router(auth.router, prefix="/api/auth", tags=["Autenticación"])
+app.include_router(auth.router, tags=["Autenticación"])
 
 # Router de gestión de salones
-app.include_router(businesses.router, prefix="/api/businesses", tags=["Salones"])
+app.include_router(businesses.router, tags=["Salones"])
 
 # Router de gestión de empleados
-app.include_router(employees.router, prefix="/api/employees", tags=["Empleados"])
+app.include_router(employees.router, tags=["Empleados"])
 
 # Router de gestión de servicios
-app.include_router(services.router, prefix="/api/services", tags=["Servicios"])
+app.include_router(services.router, tags=["Servicios"])
 
-# Router de sistema de reservas
-app.include_router(appointments.router, prefix="/api/appointments", tags=["Reservas"])
-
-# Router de sistema de fidelización
-app.include_router(loyalty.router, prefix="/api/loyalty", tags=["Fidelización"])
-
-# Router de promociones
-app.include_router(promotions.router, prefix="/api/promotions", tags=["Promociones"])
+# ===== TODO DÍA 3 - COMENTADO POR AHORA =====
+# app.include_router(appointments.router, prefix="/api/appointments", tags=["Reservas"])
+# app.include_router(loyalty.router, prefix="/api/loyalty", tags=["Fidelización"])
+# app.include_router(promotions.router, prefix="/api/promotions", tags=["Promociones"])
 
 # Endpoint raíz para verificar que la API está funcionando
 @app.get("/")
