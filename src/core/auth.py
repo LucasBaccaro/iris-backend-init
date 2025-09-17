@@ -5,7 +5,7 @@ Solo validación de tokens JWT de Supabase
 from typing import Dict, Any
 from fastapi import HTTPException, status, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from src.database.supabase import get_supabase
+from src.database.supabase import get_supabase, get_supabase_admin
 from supabase import Client
 
 # Bearer token scheme
@@ -46,21 +46,49 @@ async def get_current_user(
 
 class RoleChecker:
     """
-    Verificador de roles basado en user_metadata de Supabase
+    Verificador de roles basado en la tabla user_profiles
     """
 
     def __init__(self, allowed_roles: list):
         self.allowed_roles = allowed_roles
 
-    def __call__(self, current_user: Dict[str, Any] = Depends(get_current_user)):
-        user_role = current_user.get("user_metadata", {}).get("role")
+    async def __call__(
+        self,
+        current_user: Dict[str, Any] = Depends(get_current_user),
+        supabase: Client = Depends(get_supabase_admin)
+    ):
+        # Consultar el rol desde user_profiles usando admin client
+        try:
+            user_profile = supabase.table("user_profiles").select("role, business_id").eq("id", current_user["id"]).execute()
 
-        if not user_role or user_role not in self.allowed_roles:
+            if not user_profile.data:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Perfil de usuario no encontrado"
+                )
+
+            user_role = user_profile.data[0]["role"]
+            business_id = user_profile.data[0]["business_id"]
+
+            if user_role not in self.allowed_roles:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Permisos insuficientes para esta operación"
+                )
+
+            # Agregar rol y business_id al current_user
+            current_user["role"] = user_role
+            current_user["business_id"] = business_id
+
+            return current_user
+
+        except HTTPException:
+            raise
+        except Exception as e:
             raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Permisos insuficientes para esta operación"
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Error al verificar permisos: {str(e)}"
             )
-        return current_user
 
 
 # Checkers de roles para usar como dependencies

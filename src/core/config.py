@@ -25,6 +25,9 @@ class Settings(BaseSettings):
 
     # Supabase Auth (no necesitamos JWT propio)
 
+    # Security
+    admin_secret: str
+
     # CORS
     allowed_origins: str = "http://localhost:3000,http://localhost:3001"
 

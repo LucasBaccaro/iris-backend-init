@@ -5,6 +5,7 @@
 # Core Framework
 fastapi
 uvicorn[standard]
+requests
 
 # Database
 supabase==1.0.3
