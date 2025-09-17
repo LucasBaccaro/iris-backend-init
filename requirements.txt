@@ -1,0 +1,36 @@
+# ===================================
+# IRIS Backend - Requirements (MVP)
+# ===================================
+
+# Core Framework
+fastapi
+uvicorn[standard]
+
+# Database
+supabase==1.0.3
+websockets==10.4
+
+# Authentication & Security
+python-multipart
+
+# HTTP Client
+httpx
+
+# Data Validation & Serialization
+pydantic
+pydantic-settings
+email-validator
+
+# Date & Time
+python-dateutil
+pytz
+
+# Utilities
+python-dotenv
+
+# Testing
+pytest
+pytest-asyncio
+
+# Production
+gunicorn
